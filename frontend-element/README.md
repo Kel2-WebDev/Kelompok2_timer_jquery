@@ -3,7 +3,7 @@
 <!-- GETTING STARTED -->
 ## Getting Started to Mini-Project Kelompok 2 Timer
 
-POLBAN's JTK Web Developmenet tasks class 2021. This repository holds the code for the first mini-project of building a Timer with start, stop, and pause feature. Plus the challenge feature of persistent on closing the tab, and also having multiple timer with only one that runs. All only using Vanilla HTML, CSS, and JS.
+POLBAN's JTK Web Developmenet tasks class 2021.
 
 <!-- INSTALLATION -->
 ### Installation
@@ -13,6 +13,7 @@ POLBAN's JTK Web Developmenet tasks class 2021. This repository holds the code f
    git clone https://github.com/fauh45/Kelompok2_timer_jquery.git
    ```
 2. Install Node.js
+
 3. Install yarn by typing
    ```sh
    npm install -g yarn
