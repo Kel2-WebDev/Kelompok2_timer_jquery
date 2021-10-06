@@ -8,6 +8,7 @@ import fastifyRateLimit from "fastify-rate-limit";
 import fastifySwagger from "fastify-swagger";
 
 import WorkspaceEventsController from "./controller/events/workspace";
+import WorkspaceRouteController from "./controller/route/workspace";
 
 const app = fastify({
   logger: {
@@ -88,6 +89,7 @@ const registerPlugins = async () => {
 
   // Register Controller
   await app.register(WorkspaceEventsController);
+  await app.register(WorkspaceRouteController);
 };
 
 registerPlugins()

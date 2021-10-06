@@ -10,7 +10,7 @@ export const Workspace = Type.Object({
 });
 export type Workspace = Static<typeof Workspace>;
 
-export const NewWorkspaceBody = Type.Omit(Workspace, ["id"]);
+export const NewWorkspaceBody = Type.Omit(Workspace, ["id", "lastUsed"]);
 export type NewWorkspaceBody = Static<typeof NewWorkspaceBody>;
 
 export const NewWorkspaceResponse = Workspace;
@@ -36,7 +36,7 @@ const WorkspaceRouteController: FastifyPluginAsync = async (app, opts) => {
     },
     async (req, res) => {
       const new_workspace = await app.prisma.workspace.create({
-        data: { ...req.body, id: humanId("-") },
+        data: { ...req.body, id: humanId("-"), lastUsed: Date.now() },
       });
 
       res.send(new_workspace);
