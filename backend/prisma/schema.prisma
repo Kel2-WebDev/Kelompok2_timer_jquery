@@ -1,0 +1,33 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Workspace {
+  id          String  @id
+  title       String
+  description String
+  lastUsed    Int
+  timers      Timer[]
+}
+
+enum TimerStatus {
+  STARTED
+  PAUSED
+  STOPPED
+  RESET
+}
+
+model Timer {
+  id          String      @id
+  title       String
+  status      TimerStatus
+  elapsedTime Int
+  time        Int
+  Workspace   Workspace?  @relation(fields: [workspaceId], references: [id])
+  workspaceId String?
+}
