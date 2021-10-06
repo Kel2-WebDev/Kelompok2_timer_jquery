@@ -44,6 +44,18 @@ export class ClassTimer extends LitElement {
       text-transform: capitalize;
     }
   `;
+  workspace_id: string | null;
+
+  constructor() {
+    super();
+
+    var url_string = window.location.href; 
+    var url = new URL(url_string);
+
+    var c = url.searchParams.get("workspace_id");
+
+    this.workspace_id = c
+  }
 
   @property({ attribute: false })
   state: TimerInternalState = {
@@ -206,6 +218,8 @@ export class ClassTimer extends LitElement {
   render() {
     return html`
       <slot></slot>
+
+      <p>${this.workspace_id}</p>
 
       <p class="time">${this.formattedTime}</p>
       ${this.state.state === TimerState.started
