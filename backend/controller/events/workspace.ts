@@ -59,7 +59,7 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
             },
           });
 
-          app.io.to(socket.key).emit("update:" + data, update_response);
+          app.io.to(socket.key).emit("timer:update:" + data, update_response);
           return;
         }
       });
@@ -86,7 +86,7 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
             },
           });
 
-          app.io.to(socket.key).emit("update:" + data, res);
+          app.io.to(socket.key).emit("timer:update:" + data, res);
         }
       });
 
@@ -117,7 +117,7 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
             },
           });
 
-          app.io.to(socket.key).emit("update:" + data, res);
+          app.io.to(socket.key).emit("timer:update:" + data, res);
         }
       });
 
@@ -142,7 +142,7 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
             },
           });
 
-          app.io.to(socket.key).emit("update:" + data, res);
+          app.io.to(socket.key).emit("timer:update:" + data, res);
         }
       });
     });
