@@ -9,6 +9,7 @@ import fastifySwagger from "fastify-swagger";
 
 import WorkspaceEventsController from "./controller/events/workspace";
 import WorkspaceRouteController from "./controller/route/workspace";
+import TimerController from "./controller/route/timer";
 
 const app = fastify({
   logger: {
@@ -61,6 +62,10 @@ const registerPlugins = async () => {
         title: "Timer Kelompok 2 API",
         version: "0.0.1",
       },
+      tags: [
+        { name: "Workspace", description: "Workspace APIs" },
+        { name: "Timer", description: "Timer APIs" },
+      ],
     },
   });
 
@@ -89,7 +94,9 @@ const registerPlugins = async () => {
 
   // Register Controller
   await app.register(WorkspaceEventsController);
-  await app.register(WorkspaceRouteController);
+
+  await app.register(WorkspaceRouteController, { prefix: "/workspace" });
+  await app.register(TimerController, { prefix: "/timer" });
 };
 
 registerPlugins()
