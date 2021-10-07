@@ -89,7 +89,7 @@ const registerPlugins = async () => {
 
   // Register Controller
   await app.register(WorkspaceEventsController);
-  await app.register(WorkspaceRouteController);
+  await app.register(WorkspaceRouteController, { prefix: "/workspace" });
 };
 
 registerPlugins()
