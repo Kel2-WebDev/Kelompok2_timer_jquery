@@ -22,6 +22,7 @@ const TimerController: FastifyPluginAsync = async (app, opts) => {
     {
       schema: {
         description: "Get Workspace Timers using Workspace id",
+        tags: ["Timer"],
         params: GetWorkspaceTimerParams,
         response: {
           200: GetWorkspaceTimerResponse,
@@ -53,6 +54,7 @@ const TimerController: FastifyPluginAsync = async (app, opts) => {
     {
       schema: {
         description: "Create a new Timer in a workspace",
+        tags: ["Timer"],
         params: NewTimerParams,
         body: NewTimerBody,
         response: {
@@ -104,6 +106,7 @@ const TimerController: FastifyPluginAsync = async (app, opts) => {
     {
       schema: {
         description: "Remove a timer on a workspace",
+        tags: ["Timer"],
         params: DeleteTimerParams,
         response: {
           204: null,

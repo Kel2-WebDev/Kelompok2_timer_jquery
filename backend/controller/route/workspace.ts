@@ -22,6 +22,7 @@ const WorkspaceRouteController: FastifyPluginAsync = async (app, opts) => {
     {
       schema: {
         description: "Get workspace by id",
+        tags: ["Workspace"],
         params: GetWorkspaceParams,
         response: {
           200: GetWorkspaceResponse,
@@ -50,6 +51,7 @@ const WorkspaceRouteController: FastifyPluginAsync = async (app, opts) => {
       }),
       schema: {
         description: "Create a new workspace",
+        tags: ["Workspace"],
         body: NewWorkspaceBody,
         response: {
           201: NewWorkspaceResponse,
@@ -88,6 +90,7 @@ const WorkspaceRouteController: FastifyPluginAsync = async (app, opts) => {
     {
       schema: {
         description: "Update an existing workspace by id",
+        tags: ["Workspace"],
         params: UpdateWorkspaceParams,
         body: UpdateWorkspaceBody,
         response: {
