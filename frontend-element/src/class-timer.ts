@@ -24,7 +24,7 @@ export class ClassTimer extends LitElement {
 
     .result {
       font-size: 17px;
-      color: #b76b6d;
+      color: #eda37f;
     }
 
     button {
@@ -39,7 +39,7 @@ export class ClassTimer extends LitElement {
 
     button:hover {
       background: transparent;
-      color: #b76b6d;
+      color: #eda37f;
       font-weight: 800;
       text-transform: capitalize;
     }

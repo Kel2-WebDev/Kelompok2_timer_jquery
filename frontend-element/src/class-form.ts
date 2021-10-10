@@ -3,7 +3,7 @@ import { html, css, LitElement } from "lit";
 import { customElement, state} from "lit/decorators.js";
 
 @customElement("class-form")
-export class ClassTimer extends LitElement {
+export class ClassForm extends LitElement {
   static styles = css`
 
   `;
@@ -29,8 +29,17 @@ export class ClassTimer extends LitElement {
   render() {
     return html`
     <div>
-        <input name="workspace_id" type="text" @input=${this.onChange} value=${this.workspace_id}/>
-        <button @click=${this.onSubmit}>Submit</button>
+        <input type="text" placeholder="Title"/>
+    </div>
+    <div>
+        <input type="text" placeholder="Description"/>
+        <button @click=${this.onSubmit}>Generate</button>
+        <h3>Result : </h3>
+    </div>
+    <div>
+        <input name="workspace_id" type="text" @input=${this.onChange}
+        value=${this.workspace_id} placeholder="Id"/>
+        <button @click=${this.onSubmit}>Join</button>
     </div>
     `;
   }
