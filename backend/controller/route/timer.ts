@@ -109,7 +109,7 @@ const TimerController: FastifyPluginAsync = async (app, opts) => {
         tags: ["Timer"],
         params: DeleteTimerParams,
         response: {
-          204: null,
+          204: {},
           404: DeleteTimerError,
         },
       },
