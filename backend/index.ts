@@ -101,7 +101,7 @@ const registerPlugins = async () => {
 
 registerPlugins()
   .then(() => {
-    app.listen(3000, "0.0.0.0");
+    app.listen(3001, "0.0.0.0");
   })
   .catch((err) => {
     console.error(err);
