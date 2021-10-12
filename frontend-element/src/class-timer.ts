@@ -206,7 +206,6 @@ export class ClassTimer extends LitElement {
   render() {
     return html`
       <slot></slot>
-
       <p class="time">${this.formattedTime}</p>
       ${this.state.state === TimerState.started
         ? html`<button @click="${() => this.pause()}">Pause</button>`

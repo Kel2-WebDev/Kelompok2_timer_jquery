@@ -7,8 +7,8 @@ import { ErrorMessage } from "../common-routedef";
 
 export const Workspace = Type.Object({
   id: Type.String(),
-  title: Type.String(),
-  description: Type.String(),
+  title: Type.String({ minLength: 5, maxLength: 15 }),
+  description: Type.String({ minLength: 5, maxLength: 50 }),
   lastUsed: Type.Integer(),
 });
 export type Workspace = Static<typeof Workspace>;

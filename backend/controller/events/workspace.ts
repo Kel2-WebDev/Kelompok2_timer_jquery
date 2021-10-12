@@ -9,6 +9,8 @@ declare module "socket.io" {
 const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
   app.io
     .use((socket, next) => {
+      app.log.debug(`Someone connecting...`);
+
       const {
         handshake: { auth },
       } = socket;
@@ -23,8 +25,12 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
               socket.join(auth.key);
               socket.key = auth.key;
 
+              app.log.debug(`Someone from workspace ${auth.key} has joined!`);
               return next();
             } else {
+              app.log.debug(
+                `Someone trying to join ${auth.key} which does not exist`
+              );
               return next(new Error("Room not found"));
             }
           })
@@ -35,8 +41,12 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
       }
     })
     .on("connection", (socket) => {
+      app.log.debug(`Connected!`);
+
       socket.on("start", async (data) => {
         if (typeof data === "string") {
+          app.log.debug(`Timer ${data} is starting`);
+
           const old_data = await app.prisma.timer.findUnique({
             where: {
               id: data,
@@ -52,20 +62,25 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
             data: {
               status: "STARTED",
               time: {
-                set: Date.now(),
+                set: Math.round(Date.now() / 1000),
               },
               elapsedTime:
                 old_data.status !== "PAUSED" ? { set: 0 } : undefined,
             },
           });
 
-          app.io.to(socket.key).emit("timer:update:" + data, update_response);
+          app.log.debug(`Start of ${data} done, new state`);
+          app.log.debug(JSON.stringify(update_response, null, 4));
+
+          app.io.to(socket.key).emit("timer:update", update_response);
           return;
         }
       });
 
       socket.on("pause", async (data) => {
         if (typeof data === "string") {
+          app.log.debug(`Timer ${data} is pausing`);
+
           const old_data = await app.prisma.timer.findUnique({
             where: {
               id: data,
@@ -74,6 +89,9 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
 
           if (!old_data || old_data.status !== "STARTED") return;
 
+          const new_elapsed_time =
+            Math.round(Date.now() / 1000) - old_data.time;
+
           const res = await app.prisma.timer.update({
             where: {
               id: data,
@@ -81,17 +99,25 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
             data: {
               status: "PAUSED",
               elapsedTime: {
-                set: Date.now() - old_data.time,
+                set:
+                  old_data.elapsedTime > new_elapsed_time
+                    ? old_data.elapsedTime
+                    : new_elapsed_time,
               },
             },
           });
 
-          app.io.to(socket.key).emit("timer:update:" + data, res);
+          app.log.debug(`Pause of ${data} done, new state`);
+          app.log.debug(JSON.stringify(res, null, 4));
+
+          app.io.to(socket.key).emit("timer:update", res);
         }
       });
 
       socket.on("stop", async (data) => {
         if (typeof data === "string") {
+          app.log.debug(`Timer ${data} is stopping`);
+
           const old_data = await app.prisma.timer.findUnique({
             where: {
               id: data,
@@ -105,6 +131,9 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
           )
             return;
 
+          const new_elapsed_time =
+            Math.round(Date.now() / 1000) - old_data.time;
+
           const res = await app.prisma.timer.update({
             where: {
               id: data,
@@ -112,17 +141,25 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
             data: {
               status: "STOPPED",
               elapsedTime: {
-                set: Date.now() - old_data.time,
+                set:
+                  old_data.elapsedTime > new_elapsed_time
+                    ? old_data.elapsedTime
+                    : new_elapsed_time,
               },
             },
           });
 
-          app.io.to(socket.key).emit("timer:update:" + data, res);
+          app.log.debug(`Stop of ${data} done, new state`);
+          app.log.debug(JSON.stringify(res, null, 4));
+
+          app.io.to(socket.key).emit("timer:update", res);
         }
       });
 
       socket.on("reset", async (data) => {
         if (typeof data === "string") {
+          app.log.debug(`Timer ${data} is reseting`);
+
           const old_data = await app.prisma.timer.findUnique({
             where: {
               id: data,
@@ -138,11 +175,14 @@ const WorkspaceEventsController: FastifyPluginAsync = async (app, opts) => {
             data: {
               status: "RESET",
               elapsedTime: { set: 0 },
-              time: { set: Date.now() },
+              time: { set: Math.round(Date.now() / 1000) },
             },
           });
 
-          app.io.to(socket.key).emit("timer:update:" + data, res);
+          app.log.debug(`Stop of ${data} done, new state`);
+          app.log.debug(JSON.stringify(res, null, 4));
+
+          app.io.to(socket.key).emit("timer:update", res);
         }
       });
     });
