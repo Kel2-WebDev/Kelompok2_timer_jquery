@@ -3,7 +3,7 @@ import { ErrorMessage } from "../common-routedef";
 
 export const Timer = Type.Object({
   id: Type.String(),
-  title: Type.String(),
+  title: Type.String({ minLength: 5 }),
   status: Type.Union([
     Type.Literal("STARTED"),
     Type.Literal("PAUSED"),

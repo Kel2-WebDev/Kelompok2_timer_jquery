@@ -4,44 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Timer</title>
+    <title>TVA</title>
 
     <link rel="stylesheet" href="./index.css" />
-    <script type="module" src="./src/class-timer.ts"></script>
-    <script type="module"> 
-      import $ from "jquery";
-
-      function onLoad(){
-        let url_string = window.location.href; 
-        let url = new URL(url_string);
-  
-        let c = url.searchParams.get("workspace_id");
-  
-        $.ajax({url:"http://localhost:3001/workspace/"+c, type:"GET", traditional:true}).done((res) => {
-            console.log(res)
-
-            $("#title").text(res.title)
-            $("#description").text(res.description)
-            $("#id").text(res.id)
-        })
-
-        $.ajax({url:"http://localhost:3001/timer/"+c, type:"GET", traditional:true}).done((res) => {
-            console.log(res)
-
-            res.forEach((value, index) => {
-              $("#timers").append("<class-timer key="+value.id+"><h2>"+value.title+"</h2></class-timer>")
-            });
-        })
-      }
-
-      window.onload=onLoad
-    </script>
   </head>
   <body>
-    <h2 id="title"></h2>
-    <p id="description"></p>
-    <p id="id"></p>
-    <div id="timers">
-    </div>
+    <timer-page></timer-page>
+    <script type="module" src="./src/timer-page.ts"></script>
   </body>
 </html>

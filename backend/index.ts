@@ -14,6 +14,7 @@ import TimerController from "./controller/route/timer";
 const app = fastify({
   logger: {
     prettyPrint: true,
+    level: "debug",
   },
 });
 
@@ -51,7 +52,13 @@ const registerPlugins = async () => {
   // Rate limit backend to prevent flooding
   await app.register(fastifyRateLimit, {
     max: 100,
-    timeWindow: "1m",
+    timeWindow: "20s",
+    allowList: ["127.0.0.0", "localhost"],
+    keyGenerator: (req) =>
+      req.headers["x-real-ip"]?.toString() ||
+      req.headers["x-client-ip"]?.toString() ||
+      req.ips?.toString() ||
+      req.ip,
   });
 
   await app.register(fastifySwagger, {
@@ -73,8 +80,8 @@ const registerPlugins = async () => {
   app.setNotFoundHandler(
     {
       preHandler: app.rateLimit({
-        max: 4,
-        timeWindow: "1m",
+        max: 5,
+        timeWindow: 5000,
       }),
     },
     async (req, res) => {

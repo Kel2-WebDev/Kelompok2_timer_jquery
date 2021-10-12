@@ -135,7 +135,7 @@ const TimerController: FastifyPluginAsync = async (app, opts) => {
 
       app.io
         .in(req.params.workspace_id)
-        .emit("timer:delete:" + req.params.timer_id);
+        .emit("timer:delete", req.params.timer_id);
 
       return res.code(204).send();
     }
