@@ -1,11 +1,13 @@
 <div id="top"></div>
 
 <!-- GETTING STARTED -->
+
 ## Getting Started to Mini-Project Kelompok 2 Timer
 
 POLBAN's JTK Web Developmenet tasks class 2021.
 
 <!-- INSTALLATION -->
+
 ### Installation
 
 1. Clone the repo
@@ -24,6 +26,7 @@ POLBAN's JTK Web Developmenet tasks class 2021.
    ```
 
 <!-- BUILD -->
+
 ### Build
 
 1. Navigate the command prompt or terminal to the folder `/frontend-element` and write the command
@@ -32,9 +35,18 @@ POLBAN's JTK Web Developmenet tasks class 2021.
    ```
 2. Access `http://localhost:3000/` address on browser
 
+#### Production Build
+
+While above can be used to do development build, to make final build for production, use the following command.
+
+```sh
+yarn build
+```
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -50,8 +62,8 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
